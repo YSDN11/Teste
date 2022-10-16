@@ -32,30 +32,67 @@
             //------------------------------------SEÇÃO DE INPUTS-------------------------------------
             //Função criada com o objetivo de capturar as entradas dos players e movimentá-los no mapa
             function movePlayer(command) {
-                console.log(`Moving ${command.playerId} with ${command.keyPressed}`)
+                console.log(`game.movePlayer() -> Moving ${command.playerId} with ${command.keyPressed}`)
+
+                const acceptedMoves = {
+                    ArrowUp(player) { //Pressionar seta para cima - Subir
+                        console.log('game.movePlayer().ArrowUp -> Moving player up')
+                        if (player.y - 1 >= 0) {
+                            player.y = player.y - 1
+                    }
+                },
+
+                    ArrowDown(player) { //Pressionar seta para baixo - Descer
+                        console.log('Moving player down')
+                        if (player.y + 1 < screen.width) { 
+                            player.y = player.y + 1
+                    }
+                },
+                    
+                    ArrowLeft(player) { //Pressionar seta para esquerda - Esquerda
+                        console.log('Moving player left')
+                        if (player.x - 1 >= 0) { 
+                            player.x = player.x - 1
+                    }
+                },
+                    
+                    ArrowRight(player) { //Pressionar seta para direita - Direita
+                            console.log('Moving player right')
+                            if (player.x + 1 < screen.height) { 
+                                player.x = player.x + 1
+                    }
+                }
+            }
 
                 const keyPressed = command.keyPressed
                 const player = state.players[command.playerId]
+                const moveFunction = acceptedMoves[keyPressed]
 
-                if (keyPressed === 'ArrowUp' && player.y - 1 >= 0) { //Pressionar seta para cima - Subir
-                    player.y = player.y - 1
-                    return
+                if (moveFunction) {
+                    moveFunction(player)
                 }
 
-                if (keyPressed === 'ArrowDown' && player.y + 1 < screen.width) { //Pressionar seta para baixo - Descer
-                    player.y = player.y + 1
-                    return
-                }
+                return //Temp
 
-                if (keyPressed === 'ArrowLeft' && player.x - 1 >= 0) { //Pressionar seta para esquerda - Esquerda
-                    player.x = player.x - 1
-                    return
-                }
+                // if (keyPressed === 'ArrowUp' && player.y - 1 >= 0) { //Pressionar seta para cima - Subir
+                //     player.y = player.y - 1
+                //     return
+                // }
 
-                if (keyPressed === 'ArrowRight' && player.x + 1 < screen.height) { //Pressionar seta para direita - Direita
-                    player.x = player.x + 1
-                    return
-                }
+                // if (keyPressed === 'ArrowDown' && player.y + 1 < screen.width) { //Pressionar seta para baixo - Descer
+                //     player.y = player.y + 1
+                //     return
+                // }
+
+                // if (keyPressed === 'ArrowLeft' && player.x - 1 >= 0) { //Pressionar seta para esquerda - Esquerda
+                //     player.x = player.x - 1
+                //     return
+                // }
+
+                // if (keyPressed === 'ArrowRight' && player.x + 1 < screen.height) { //Pressionar seta para direita - Direita
+                //     player.x = player.x + 1
+                //     return
+                // }
             }
 
             return{ 
@@ -81,7 +118,7 @@
             }
 
             function notifyAll(command) {
-                console.log(`Notifying ${state.observers.length} observers`)
+                console.log(`keyboardListener -> Notifying ${state.observers.length} observers`)
 
                 for (const observerFunction of state.observers){
                     observerFunction(command)
@@ -144,10 +181,6 @@
         context.fillStyle = color
         context.fillRect(positionX, positionY, width, height)
 
-       
-
-        
-        
     </script>
 </body>
 </html>
