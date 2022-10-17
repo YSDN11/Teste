@@ -3,7 +3,11 @@ export default function createGame() {
     //Criando os jogadores e frutas.
     const state = {
     players: {},
-    fruits: {}
+    fruits: {},
+    screen: {
+        width: 10,
+        height: 10
+    }
     }
 
     //Função que adiciona um jogador
@@ -59,7 +63,7 @@ export default function createGame() {
 
             ArrowDown(player) { //Pressionar seta para baixo - Descer
                 //console.log('Moving player down')
-                if (player.y + 1 < screen.width) { 
+                if (player.y + 1 < state.screen.width) { 
                     player.y = player.y + 1
             }
         },
@@ -73,7 +77,7 @@ export default function createGame() {
             
             ArrowRight(player) { //Pressionar seta para direita - Direita
                     //console.log('Moving player right')
-                    if (player.x + 1 < screen.height) { 
+                    if (player.x + 1 < state.screen.height) { 
                         player.x = player.x + 1
             }
         }
