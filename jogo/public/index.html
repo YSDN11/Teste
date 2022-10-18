@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="client.css" rel="stylesheet"> 
     <title>Let's play!</title>
+
+    <script> scr="/socket.io/socket.io.js"</script>
 </head>
 <body>
 
@@ -17,22 +19,20 @@
         import renderScreen from './renderScreen.js'
 
         //Pattern
-        const game = createGame()
+        
         const keyboardListener = createKeyboardListener(document)
         keyboardListener.subscribe(game.movePlayer)
 
         const screen = document.getElementById('screen')
-        renderScreen(screen, game, requestAnimationFrame)
-
-        //Adicionando jogadores no mapa
-        game.addPlayer ({playerId: 'player1', playerX: 1, playerY: 1})
-        game.addPlayer ({playerId: 'player2', playerX: 5, playerY: 1})
-        game.addPlayer ({playerId: 'player3', playerX: 7, playerY: 1})
-        game.addFruit ({fruitId: 'fruit1', fruitX: 8, fruitY: 8})
-        game.addFruit ({fruitId: 'fruit2', fruitX: 9, fruitY: 8})
-
          //Executa a função renderScreen
         renderScreen(screen, game, requestAnimationFrame)
+
+        const socket = io()
+
+        socket.on('connect', () => {
+            const playerId = socket.id
+            console.log(`Player connected on client with id: ${playerId}`)
+        })
 
         //Tamanho do espaço do ambiente do jogo.
         const color = 'white'
